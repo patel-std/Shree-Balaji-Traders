@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shree Balaji Traders - Hardware Supplier</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --saffron: #FF6B00; --saffron-light: #FFF3E0; --saffron-dark: #CC5500;
+    --gold: #F5A623; --dark: #1A1A1A; --text: #333; --muted: #777;
+    --bg: #FAFAF7; --border: #E8E8E0;
+  }
+  body { font-family: 'Hind', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+  header {
+    background: linear-gradient(135deg, #FF6B00 0%, #CC3300 100%);
+    color: white; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(255,107,0,0.3);
+  }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .logo-block { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .logo-icon { width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 20px; font-weight: 800; line-height: 1.1; }
+  .logo-text p { font-size: 11px; opacity: 0.85; letter-spacing: 1px; text-transform: uppercase; }
+  .whatsapp-btn {
+    display: flex; align-items: center; gap: 8px; background: #25D366;
+    color: white; text-decoration: none; padding: 10px 20px; border-radius: 50px;
+    font-size: 13px; font-weight: 600; transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(37,211,102,0.4); white-space: nowrap;
+  }
+  .whatsapp-btn:hover { background: #1ebe5a; transform: translateY(-2px); }
+  .whatsapp-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .hero {
+    background: linear-gradient(160deg, #FFF8F0 0%, #FFF3E0 60%, #FFE5C0 100%);
+    padding: 50px 24px 44px; text-align: center;
+    border-bottom: 1px solid #FFD9A0; position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .hero-badge { display: inline-block; background: var(--saffron-light); color: var(--saffron-dark); border: 1px solid #FFCC80; padding: 5px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+  .hero h2 { font-family: 'Baloo 2', cursive; font-size: clamp(26px, 5vw, 44px); font-weight: 800; color: var(--dark); line-height: 1.2; margin-bottom: 12px; }
+  .hero h2 span { color: var(--saffron); }
+  .hero p { font-size: 15px; color: var(--muted); max-width: 500px; margin: 0 auto 26px; line-height: 1.7; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--saffron); color: white; text-decoration: none; padding: 14px 32px; border-radius: 50px; font-size: 15px; font-weight: 700; transition: all 0.25s; box-shadow: 0 8px 24px rgba(255,107,0,0.35); }
+  .hero-cta:hover { background: var(--saffron-dark); transform: translateY(-3px); }
+
+  .stats { background: white; border-bottom: 1px solid var(--border); }
+  .stats-inner { max-width: 1100px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: repeat(3,1fr); }
+  .stat-item { text-align: center; padding: 10px; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-item strong { display: block; font-family: 'Baloo 2',cursive; font-size: 26px; font-weight: 800; color: var(--saffron); }
+  .stat-item span { font-size: 12px; color: var(--muted); margin-top: 2px; display: block; }
+
+  .section { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+  .section-header { text-align: center; margin-bottom: 36px; }
+  .section-header h2 { font-family: 'Baloo 2',cursive; font-size: 30px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+  .section-header p { color: var(--muted); font-size: 14px; }
+  .underline { width: 56px; height: 4px; background: linear-gradient(90deg, var(--saffron), var(--gold)); border-radius: 10px; margin: 10px auto 0; }
+
+  .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
+  .cat-card {
+    background: white; border-radius: 20px; border: 2px solid var(--border);
+    padding: 30px 18px 24px; text-align: center; cursor: pointer; transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .cat-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--saffron-light), transparent); opacity: 0; transition: opacity 0.25s; }
+  .cat-card:hover { border-color: var(--saffron); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(255,107,0,0.15); }
+  .cat-card:hover::before { opacity: 1; }
+  .cat-emoji { font-size: 50px; display: block; margin-bottom: 12px; position: relative; }
+  .cat-img-wrap { width: 80px; height: 80px; margin: 0 auto 12px; position: relative; display: flex; align-items: center; justify-content: center; }
+  .cat-img-wrap img { width: 80px; height: 80px; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 14px rgba(255,107,0,0.18); transition: opacity 0.3s; }
+  .cat-img-wrap .cat-emoji-fallback { font-size: 50px; position: absolute; }
+  .cat-img-wrap img.loaded + .cat-emoji-fallback { display: none; }
+  .cat-img-wrap img.error { display: none; }
+  .cat-name { font-family: 'Baloo 2',cursive; font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 5px; position: relative; }
+  .cat-count { font-size: 12px; color: var(--muted); position: relative; }
+  .cat-arrow { display: inline-flex; align-items: center; justify-content: center; margin-top: 12px; background: var(--saffron-light); color: var(--saffron); width: 34px; height: 34px; border-radius: 50%; font-size: 17px; transition: all 0.2s; position: relative; }
+  .cat-card:hover .cat-arrow { background: var(--saffron); color: white; }
+
+  .services-bg { background: linear-gradient(160deg, #FFF8F0, #FFF3E0); border-top: 1px solid #FFD9A0; border-bottom: 1px solid #FFD9A0; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 16px; }
+  .service-card { background: white; border-radius: 16px; padding: 20px 18px; text-align: center; border: 1px solid var(--border); transition: all 0.2s; }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(255,107,0,0.1); border-color: #FFD0A0; }
+  .service-icon { font-size: 34px; margin-bottom: 10px; display: block; }
+  .service-card h3 { font-weight: 600; font-size: 14px; color: var(--dark); margin-bottom: 5px; }
+  .service-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .contact-section { background: linear-gradient(135deg, #FF6B00 0%, #CC3300 100%); color: white; text-align: center; padding: 56px 24px; }
+  .contact-section h2 { font-family: 'Baloo 2',cursive; font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+  .contact-section p { font-size: 15px; opacity: 0.9; margin-bottom: 28px; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .contact-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .contact-btns a { display: flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 50px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-wa { background: #25D366; color: white; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+  .btn-wa:hover { background: #1ebe5a; transform: translateY(-3px); }
+  .btn-call { background: white; color: var(--saffron); }
+  .btn-call:hover { background: #fff3e0; transform: translateY(-3px); }
+
+  footer { background: #1A1A1A; color: #aaa; text-align: center; padding: 24px; font-size: 13px; }
+  footer strong { color: #FF6B00; }
+
+  /* DETAIL PAGE */
+  .cat-detail-header { background: linear-gradient(135deg, #FF6B00 0%, #CC3300 100%); padding: 28px 24px 24px; }
+  .cat-detail-inner { max-width: 1100px; margin: 0 auto; }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); color: white; border: none; padding: 9px 18px; border-radius: 50px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Hind',sans-serif; margin-bottom: 18px; }
+  .back-btn:hover { background: rgba(255,255,255,0.35); transform: translateX(-4px); }
+  .cat-detail-title { display: flex; align-items: center; gap: 16px; }
+  .cat-detail-emoji { font-size: 46px; }
+  .cat-detail-title h2 { font-family: 'Baloo 2',cursive; font-size: 26px; font-weight: 800; color: white; }
+  .cat-detail-title p { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+
+  .products-section { max-width: 1100px; margin: 0 auto; padding: 34px 24px 48px; }
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 20px; }
+  .product-card { background: white; border-radius: 18px; border: 1px solid var(--border); overflow: hidden; transition: all 0.25s; }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); border-color: #FFD0A0; }
+
+  /* IMAGE BOX */
+  .product-img {
+    height: 170px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #FFF8F0, #FFF3E0);
+    border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .product-img img {
+    width: 100%; height: 100%; object-fit: contain;
+    position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s;
+    padding: 6px; pointer-events: none;
+  }
+  .product-img img.loaded { opacity: 1; }
+  .product-img .fallback-emoji { font-size: 60px; position: relative; z-index: 1; transition: opacity 0.3s; }
+  .product-img img.loaded + .fallback-emoji { opacity: 0; }
+
+  /* LIGHTBOX */
+  .lightbox-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .lightbox-overlay.open { display: flex; }
+  .lightbox-overlay img {
+    max-width: 92vw; max-height: 80vh; object-fit: contain;
+    border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  .lightbox-close {
+    position: fixed; top: 16px; right: 20px;
+    background: rgba(255,255,255,0.15); color: white; border: none;
+    width: 44px; height: 44px; border-radius: 50%; font-size: 22px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.3); }
+  .lightbox-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.15); color: white; border: none;
+    padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Hind', sans-serif; transition: background 0.2s;
+  }
+  .lightbox-back:hover { background: rgba(255,255,255,0.28); }
+  .lightbox-name { color: rgba(255,255,255,0.85); font-size: 15px; font-weight: 600; margin-top: 4px; }
+
+  .product-info { padding: 16px 18px 18px; }
+  .product-name { font-weight: 600; font-size: 15px; color: var(--dark); margin-bottom: 6px; line-height: 1.3; }
+  .product-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-tag { background: var(--saffron-light); color: var(--saffron-dark); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 50px; }
+  .inquire-btn { display: flex; align-items: center; gap: 5px; background: #25D366; color: white; text-decoration: none; font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 50px; transition: all 0.2s; }
+  .inquire-btn:hover { background: #1ebe5a; }
+
+  @media (max-width: 600px) {
+    .logo-text h1 { font-size: 16px; }
+    .whatsapp-btn span { display: none; }
+    .category-grid { grid-template-columns: repeat(2,1fr); }
+    .cat-card { padding: 22px 12px 18px; }
+    .cat-emoji { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-block" onclick="goHome()">
+      <div class="logo-icon">🛠️</div>
+      <div class="logo-text">
+        <h2>Shree Balaji Traders</h2>
+        <p>Hardware Supplier • Since 2021</p>
+      </div>
+    </div>
+    <a href="https://wa.me/918960559322?text=Namaste%2C%20mujhe%20aapke%20products%20ke%20baare%20mein%20jaankari%20chahiye." class="whatsapp-btn" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.112 1.529 5.836L.057 23.215a.5.5 0 0 0 .608.63l5.556-1.453A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.031-1.371l-.361-.214-3.739.978.999-3.636-.235-.375A9.899 9.899 0 0 1 2.1 12C2.1 6.532 6.532 2.1 12 2.1S21.9 6.532 21.9 12 17.468 21.9 12 21.9z"/></svg>
+      <span>Contact Us</span>
+    </a>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="page active">
+  <section class="hero">
+    <div class="hero-badge">⭐ Trusted Hardware Supplier Since 2021</div>
+    <h2>Har Zaroorat Ka<br><span>Hardware Solution!</span></h2>
+    <p>Best Quality , Best Price , Fastest Delivery.</p>
+    <a href="https://wa.me/918960559322?text=Namaste ! %2C%20mujhe%20product%20inquiry%20karni%20hai." class="hero-cta" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.112 1.529 5.836L.057 23.215a.5.5 0 0 0 .608.63l5.556-1.453A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.031-1.371l-.361-.214-3.739.978.999-3.636-.235-.375A9.899 9.899 0 0 1 2.1 12C2.1 6.532 6.532 2.1 12 2.1S21.9 6.532 21.9 12 17.468 21.9 12 21.9z"/></svg>
+      Enquiry Now
+    </a>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Our Products</h2>
+      <p>Click on categories to see items</p>
+      <div class="underline"></div>
+    </div>
+    <div class="category-grid">
+      <div class="cat-card" onclick="openCategory('lasersheet')">
+        <div class="cat-img-wrap" id="catimg-lasersheet">
+          <img src="" alt="Laser Cutting Sheets" style="display:none" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none'" onerror="this.classList.add('error')">
+          <span class="cat-emoji-fallback">🎚️</span>
+        </div>
+        <div class="cat-name">Laser Cutting Sheets</div><div class="cat-count">See More..</div><div class="cat-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="openCategory('tools')">
+        <div class="cat-img-wrap" id="catimg-tools">
+          <img src="" alt="Tools" style="display:none" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none'" onerror="this.classList.add('error')">
+          <span class="cat-emoji-fallback">🔨</span>
+        </div>
+        <div class="cat-name">Power Tools</div><div class="cat-count">See More..</div><div class="cat-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="openCategory('cuttingwheel')">
+        <div class="cat-img-wrap" id="catimg-cuttingwheel">
+          <img src="" alt="cuttingwheel" style="display:none" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none'" onerror="this.classList.add('error')">
+          <span class="cat-emoji-fallback">💡</span>
+        </div>
+        <div class="cat-name">Cutting Tools</div><div class="cat-count">See More..</div><div class="cat-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="openCategory('sanitary')">
+        <div class="cat-img-wrap" id="catimg-sanitary">
+          <img src="" alt="Sanitary" style="display:none" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none'" onerror="this.classList.add('error')">
+          <span class="cat-emoji-fallback">🪠</span>
+        </div>
+        <div class="cat-name">Sanitary</div><div class="cat-count">3 products</div><div class="cat-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="openCategory('paints')">
+        <div class="cat-img-wrap" id="catimg-paints">
+          <img src="" alt="Paints" style="display:none" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none'" onerror="this.classList.add('error')">
+          <span class="cat-emoji-fallback">🎨</span>
+        </div>
+        <div class="cat-name">Paints</div><div class="cat-count">3 products</div><div class="cat-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="openCategory('cement')">
+        <div class="cat-img-wrap" id="catimg-cement">
+          <img src="" alt="Cement & Sand" style="display:none" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none'" onerror="this.classList.add('error')">
+          <span class="cat-emoji-fallback">🏗️</span>
+        </div>
+        <div class="cat-name">Cement & Sand</div><div class="cat-count">3 products</div><div class="cat-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="services-bg">
+    <section class="section">
+      <div class="section-header"><h2>Our Qualities</h2><div class="underline"></div></div>
+      <div class="services-grid">
+        <div class="service-card"><span class="service-icon">🏆</span><h3>5+ Years of Trust</h3></div>
+        <div class="service-card"><span class="service-icon">💰</span><h3>Best Price Guarantee</h3><p>Market competitive prices, No hidden charges extra</p></div>
+        <div class="service-card"><span class="service-icon">🚚</span><h3>On time Delivery</h3><p></div>
+        <div class="service-card"><span class="service-icon">✅</span><h3>Original Products</h3><p>Genuine products</p></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="stats">
+    <div class="stats-inner">
+      <div class="stat-item"><strong>5+</strong><span>Years old experience</span></div>
+      <div class="stat-item"><strong>100+</strong><span>Products Available</span></div>
+      <div class="stat-item"><strong>1000+</strong><span>Happy Customers</span></div>
+    </div>
+  </div>
+
+  <section class="contact-section">
+    <h2>Contact now for any enquiry!</h2>
+    <div class="contact-btns">
+      <a href="https://wa.me/918960559322?text=Namaste%20Shree%20Balaji%20Traders%2C%20mujhe%20inquiry%20karni%20hai." class="btn-wa" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.112 1.529 5.836L.057 23.215a.5.5 0 0 0 .608.63l5.556-1.453A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.031-1.371l-.361-.214-3.739.978.999-3.636-.235-.375A9.899 9.899 0 0 1 2.1 12C2.1 6.532 6.532 2.1 12 2.1S21.9 6.532 21.9 12 17.468 21.9 12 21.9z"/></svg>
+        Contact Us on WhatsApp
+      </a>
+      <a href="tel:+918960559322" class="btn-call">📞 Call Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Shree Balaji Traders</strong> — Hardware Supplier</p>
+    <p style="margin-top:6px;font-size:12px;">© 2025 Shree Balaji Traders.</p>
+  </footer>
+</div>
+
+<!-- CATEGORY DETAIL PAGE -->
+<div id="catPage" class="page">
+  <div class="cat-detail-header">
+    <div class="cat-detail-inner">
+      <button class="back-btn" onclick="goHome()">← Back</button>
+      <div class="cat-detail-title">
+        <span class="cat-detail-emoji" id="catEmoji"></span>
+        <div><h2 id="catTitle">lasersheet & Fittings</h2><p id="catSubtitle">Sabse achhe brands</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="products-section">
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lbClose">✕</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-name" id="lightboxName"></div>
+  <button class="lightbox-back" id="lbBack">← Wapas Jao</button>
+</div>
+
+<script>
+const WA = '918960559322';
+
+// ================================================================
+//  CATEGORY IMAGES — Har category ke liye ek image link daalein
+//  Khali string '' rakhne se emoji dikhega (fallback)
+// ================================================================
+const categoryImages = {
+  lasersheet:       'https://lh3.googleusercontent.com/d/1wQZ2Y-5Dk3vegl3cKss6iRkQ4sIHUdKk', 
+  tools:      'https://lh3.googleusercontent.com/d/1L6fctIzMqVbjpwT4_CxCIPGjfTCRZ4SC',
+  cuttingwheel: 'https://lh3.googleusercontent.com/d/1rM4ZbJfjBKNysfwSzquo3qR3e6n8JdqM', 
+  sanitary:   '', 
+  paints:     '',
+  cement:     '', 
+};
+
+// Category images set karna
+Object.keys(categoryImages).forEach(key => {
+  const link = categoryImages[key];
+  const wrap = document.getElementById('catimg-' + key);
+  if (wrap && link) {
+    const img = wrap.querySelector('img');
+    img.src = link;
+    img.style.display = 'block';
+  }
+});
+// ================================================================
+
+// ================================================================
+//  PRODUCTS DATA
+//  Har product mein ek "image" field hai.
+//  - Agar image field khali hai ('') toh emoji dikhega.
+//  - Apni Google Drive link yahan paste karein:
+//    Format: 'https://drive.google.com/uc?export=view&id=YAHAN_APNI_ID_DAALEIN'
+// ================================================================
+
+const categories = {
+  lasersheet: {
+    name: 'We Provide Custom Sheet Also (Order Based).', subtitle: '',
+    products: [
+      {
+      
+        image: 'https://lh3.googleusercontent.com/d/1y5zZRpuz7lpqNzVgbS3AUi7rFzK5sMO0', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+      {
+       
+        image: 'https://lh3.googleusercontent.com/d/1immC3q3Hid531mzb_LBNQ9NcHae-zIxP', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+      {
+        
+        image: 'https://lh3.googleusercontent.com/d/1tzXuuWFYr4UPo2AZysKQVNMaVhViwH81', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+      {
+       
+        image: 'https://lh3.googleusercontent.com/d/1ZFvonJYLDxFybevlu3jDf1tyviUcGOnX', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+      {
+        image: 'https://lh3.googleusercontent.com/d/1JtAABfv-aMuUVDfEOKj0mUT3NaI15Cmi', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+       {
+        image: 'https://lh3.googleusercontent.com/d/1Sr9ZlKs4fV7ByrVR5TS90roJ3jt3jDol',
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+       {
+        image: 'https://lh3.googleusercontent.com/d/1arA1052ezQxHzpSpmsB-o4SZSSgKmOxR', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+      {
+        image: 'https://lh3.googleusercontent.com/d/1O6-ZYdI6UvdICGdO9HQFfAJUw_aDiqe3', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+      {
+        image: 'https://lh3.googleusercontent.com/d/1jHOaAj8xi2d2wqXyugCqT7IF1Sk7A_gp', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+       {
+        image: 'https://lh3.googleusercontent.com/d/1xrhMwJZAkrJn2KIX_sTWxjwqSpJhewbB', 
+        name: 'Laser Cutting Sheet',
+        desc: 'All Size Available',
+        tag: 'Heavy Duty'
+      },
+    ]
+  },
+  tools: {
+    emoji: '', name: 'Tools', subtitle: 'Hand tools, power tools — professional grade',
+    products: [
+      {
+        emoji: '',
+        image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=400&q=80', 
+        name: 'Hand Tools Set',
+        desc: 'Hammer, pliers, screwdrivers, spanners — professional grade complete tool set.',
+        tag: 'Best Seller'
+      },
+      {
+        emoji: '',
+        image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&q=80', 
+        name: 'Drill Machine & Bits',
+        desc: 'Electric drills, bits sets — Bosch, Makita aur local brands sab available.',
+        tag: 'Power Tools'
+      },
+      {
+        emoji: '📐',
+        image: '', // 👈 Yahan apni Measuring Tools ki image link daalein
+        name: 'Measuring Tools',
+        desc: 'Measuring tape, spirit level, square tools — accurate aur durable.',
+        tag: 'Precision'
+      },
+    ]
+  },
+  cuttingwheel: {
+    name: 'Cutting Wheels', subtitle: '',
+    products: [
+      {
+        image: 'https://lh3.googleusercontent.com/d/1jLQMnzWPRViLmKPg8LV32FaFexRRptJZ', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Wolcut Cutting Wheel Double Net',
+        desc: 'Size 4 Inch , 5 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/1xzRYKvmWyeZ8SjIvgBHxJjvTXqJUufZg', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Wolcut Cutting Wheel Single Net',
+        desc: 'Size 4 Inch , 5 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/1CIJ0e3fjBydEkbAhxtxNM9HYaBLvRD6_', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Wolcut Cutting Wheel',
+        desc: 'Size 14 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/1dIgDXQBBv0r4lLIWlWNwzzM7FUe3ZsGa', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Metro Cutting Wheel Double Net',
+        desc: 'Size 4 Inch, 5 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/10nBWULnVoC5lBNjnhNKMRcye5hOo37Q4', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Metro Cutting Wheel',
+        desc: 'Size 14 Inch',
+      },
+       {
+       image: 'https://lh3.googleusercontent.com/d/1T6laVoGbJEEzwYK56Yze8OXUvvMivcJx', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Camron Pro Cutting Wheel Double Net',
+        desc: 'Size 4 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/1tl4DFIe7ZCYYCshO-ht9rGIUeAbd258E', // 👈 Yahan apni Wires ki image link daalein
+        name: 'Camron Pro Cutting Wheel',
+        desc: 'Size 14 Inch',
+      },
+        {
+       image: 'https://lh3.googleusercontent.com/d/18sO2TqLnMS-7tqFqGjbu3lVaReBQjk-4', 
+        name: 'RedFire Cutting Wheel',
+        desc: 'Size 4 Inch',
+      },
+       {
+       image: 'https://lh3.googleusercontent.com/d/1yDeCT12rOC7ROso4qCuRtS-qOjUWAmO0',
+        name: 'RedFire Cutting Wheel',
+        desc: 'Size 5 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/1jrYyXsimp4ybfS-uqJnSWZuHNJWvocCi', 
+        name: 'PowerTex Cutting Wheel',
+        desc: 'Size 4 Inch',
+      },
+      {
+       image: 'https://lh3.googleusercontent.com/d/1naXF3ah4NM6SBOO3-AG_KW96qT5vT26e', 
+        name: 'PowerTex Cutting Wheel',
+        desc: 'Size 5 Inch',
+      },
+    ]
+  },
+  sanitary: {
+    emoji: '🪠', name: 'Sanitary', subtitle: 'Taps, commodes, fittings — premium brands',
+    products: [
+      {
+        emoji: '🚰',
+        image: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80',
+        name: 'Taps & Faucets',
+        desc: 'Bathroom aur kitchen taps — Jaquar, Cera, Parryware brands available.',
+        tag: 'Premium'
+      },
+      {
+        emoji: '🪠',
+        image: '', 
+        name: 'Commode & Basin',
+        desc: 'Wall hung commodes, floor mounted, wash basins — sab sizes mein.',
+        tag: 'Top Brands'
+      },
+      {
+        emoji: '🚿',
+        image: '', 
+        name: 'Shower Fittings',
+        desc: 'Rain showers, hand showers, shower panels — luxury se budget tak.',
+        tag: 'Luxury Range'
+      },
+    ]
+  },
+  paints: {
+    emoji: '🎨', name: 'Paints', subtitle: 'Asian Paints, Berger, Nerolac — sab brands',
+    products: [
+      {
+        emoji: '🎨',
+        image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400&q=80', 
+        name: 'Interior Wall Paints',
+        desc: 'Asian Paints Royale, Berger Silk, Nerolac — washable, long lasting.',
+        tag: 'Best Quality'
+      },
+      {
+        emoji: '🏠',
+        image: '', // 👈 Yahan apni Exterior Paint ki image link daalein
+        name: 'Exterior Paints',
+        desc: 'Weather proof exterior emulsion paints — rain, heat sab mein perfect.',
+        tag: 'Weatherproof'
+      },
+      {
+        emoji: '🖌️',
+        image: '', // 👈 Yahan apni Primer ki image link daalein
+        name: 'Primer & Putty',
+        desc: 'Wall primer, wall putty, enamel paints — painting ke liye complete range.',
+        tag: 'Complete Range'
+      },
+    ]
+  },
+  cement: {
+    emoji: '🏗️', name: 'Cement & Sand', subtitle: 'Construction material — best brands, best rates',
+    products: [
+      {
+        emoji: '🏗️',
+        image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80',
+        name: 'Cement (Bags)',
+        desc: 'Ultratech, ACC, Ambuja cement — 50kg bags. Bulk order pe discount.',
+        tag: 'Bulk Available'
+      },
+      {
+        emoji: '🪨',
+        image: '',
+        name: 'River Sand & M-Sand',
+        desc: 'Construction grade sand — river sand aur manufactured sand available.',
+        tag: 'Pure Quality'
+      },
+      {
+        emoji: '🧱',
+        image: '',
+        name: 'Bricks & Blocks',
+        desc: 'Red bricks, fly ash bricks, AAC blocks — sab types available.',
+        tag: 'All Types'
+      },
+    ]
+  }
+};
+
+// ================================================================
+
+const waIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.112 1.529 5.836L.057 23.215a.5.5 0 0 0 .608.63l5.556-1.453A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.9 9.9 0 0 1-5.031-1.371l-.361-.214-3.739.978.999-3.636-.235-.375A9.899 9.899 0 0 1 2.1 12C2.1 6.532 6.532 2.1 12 2.1S21.9 6.532 21.9 12 17.468 21.9 12 21.9z"/></svg>`;
+
+function makeImgBox(p) {
+  if (p.image) {
+    const safeName = (p.name || '').replace(/'/g, "\\'");
+    return `<div class="product-img lb-trigger" data-src="${p.image}" data-name="${safeName}" style="cursor:zoom-in;">
+      <img src="${p.image}" alt="${safeName}" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+      <span class="fallback-emoji">${p.emoji || '📦'}</span>
+    </div>`;
+  }
+  return `<div class="product-img"><span class="fallback-emoji">${p.emoji || '📦'}</span></div>`;
+}
+
+// Event delegation — click anywhere on image box
+document.addEventListener('click', function(e) {
+  const trigger = e.target.closest('.lb-trigger');
+  if (trigger) {
+    openLightbox(trigger.dataset.src, trigger.dataset.name);
+    return;
+  }
+  const lb = document.getElementById('lightbox');
+  if (e.target === lb || e.target.id === 'lbClose' || e.target.id === 'lbBack') {
+    closeLightbox();
+  }
+});
+
+function openLightbox(src, name) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxName').textContent = name;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightboxImg').src = '';
+  document.body.style.overflow = '';
+}
+
+function openCategory(key) {
+  const cat = categories[key];
+  document.getElementById('catEmoji').textContent = cat.emoji;
+  document.getElementById('catTitle').textContent = cat.name;
+  document.getElementById('catSubtitle').textContent = cat.subtitle;
+  document.getElementById('productGrid').innerHTML = cat.products.map(p => {
+    const msg = encodeURIComponent('Namaste ! , Mujhe ' + p.name + ' ki inquiry karni hai.');
+    return `<div class="product-card">
+      ${makeImgBox(p)}
+      <div class="product-info">
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-desc">${p.desc}</p>
+        <div class="product-footer">
+          <span class="product-tag">${p.tag}</span>
+          <a href="https://wa.me/${WA}?text=${msg}" class="inquire-btn" target="_blank">${waIcon} Enquiry</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('homePage').classList.remove('active');
+  document.getElementById('catPage').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goHome() {
+  document.getElementById('catPage').classList.remove('active');
+  document.getElementById('homePage').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
